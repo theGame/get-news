@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import './styles/common.scss';
+import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 import routes from './routes';
 
