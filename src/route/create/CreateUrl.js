@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { SIZES } from './../../constants/index.js';
 import UrlButtons from './UrlButtons';
 import UrlSatus from './UrlStatus';
+import TransferProtocol from './TransferProtocol';
 import { Input, Grid } from 'semantic-ui-react';
 
 class CreateUrl extends Component {
@@ -9,7 +11,10 @@ class CreateUrl extends Component {
 
         this.state = {
             url: '',
-            isTested: false
+            isTested: false,
+            isLoading: false,
+            status: {},
+            protocolType: ''
         }
     }
 
@@ -21,14 +26,18 @@ class CreateUrl extends Component {
         });
     };
 
+    onProtocolUpdate = (protocolType) => this.setState({ protocolType });
+
     render() {
-        const { url, isLoading, isTested } = this.state;
+        const { url, isLoading, isTested, protocolType } = this.state;
+        console.log(this.state);
         return (
             <section className="add-url-wrapper">
                 <Grid divided>
-                    <Grid.Row>
+                    <Grid.Row centered>
+                        <TransferProtocol type={protocolType} onUpdate={this.onProtocolUpdate} />
                         <Input
-                            size='big'
+                            size={SIZES.HUGE}
                             icon='search'
                             placeholder='Want more news?'
                             value={url}
@@ -39,7 +48,7 @@ class CreateUrl extends Component {
                             isTestUrlDisabled={false}
                         />
                     </Grid.Row>
-                    <Grid.Row>
+                    <Grid.Row centered>
                         <UrlSatus />
                     </Grid.Row>
                 </Grid>
