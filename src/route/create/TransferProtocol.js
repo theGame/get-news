@@ -10,10 +10,12 @@ class TransferProtocol extends PureComponent {
         const options = this.props.transferOptions;
         return (
             <Dropdown
+                className={`${SIZES.HUGE} compact`}
                 options={options}
                 size={SIZES.HUGE}
                 search
                 selection
+                defaultValue={options[0].value}
                 onChange={this.handleChange}
             />
         );

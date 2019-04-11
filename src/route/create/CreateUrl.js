@@ -5,7 +5,6 @@ import UrlSatus from './UrlStatus';
 import TransferProtocol from './TransferProtocol';
 import { Input, Grid, Loader } from 'semantic-ui-react';
 import urlHelper from './../../utils/urlHelper';
-import './createUrl.scss';
 
 class CreateUrl extends Component {
     constructor(props) {
@@ -33,9 +32,8 @@ class CreateUrl extends Component {
         this.setState({isLoading: true});
 
         try {
-            const result = await urlHelper.getWebPage(this.state.url);
-            console.log(urlHelper);
-            console.log(result);
+            const testedUrl = await urlHelper.getWebPage('https://github.com/jsdom/jsdom/tree/master/scripts/webidl');
+            console.log(testedUrl);
             //this.props.addUrl(result);
         } catch (err) {
             console.log(err.status);
@@ -63,6 +61,7 @@ class CreateUrl extends Component {
                 <Grid divided>
                     <Grid.Row centered>
                         <TransferProtocol type={protocolType} onUpdate={this.handleProtocolUpdate} />
+                        <span className={`${SIZES.HUGE} ui label transparent url-helper`}>://</span>
                         <Input
                             size={SIZES.HUGE}
                             icon='search'

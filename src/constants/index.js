@@ -8,3 +8,7 @@ export const SIZES = Object.freeze({
 	HUGE:'huge',
 	MASSIVE:'massive' 
 });
+
+export const API = Object.freeze({
+	TEST_URL: '/api/test/url'
+});

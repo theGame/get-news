@@ -6,7 +6,7 @@
   "scripts": {
     "client-install": "cd client && npm install",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "server": "nodemon --inspect server.js",
     "client": "npm start --prefix client"
   },
   "author": "Brad Traversy",
@@ -15,8 +15,12 @@
     "nodemon": "^1.14.6"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.2",
-    "mongoose": "^5.4.17"
+    "method-override": "^3.0.0",
+    "mongoose": "^5.4.17",
+    "node-fetch": "^2.3.0",
+    "request": "^2.88.0"
   }
 }

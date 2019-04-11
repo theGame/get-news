@@ -8,7 +8,7 @@ import configureStore from "./store/store";
 import * as serviceWorker from './serviceWorker';
 import routes from './routes';
 
-import './styles/common.scss';
+import './styles/main.scss';
 import 'semantic-ui-css/semantic.min.css';
 
 const store = configureStore();

@@ -1,14 +1,19 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
+const fetch = require("node-fetch");
 
-const mongoURIConnection = 'url';
+const mongoURIConnection = 'mongodb://test:Qwerty1!@ds251894.mlab.com:51894/news-db';
 const host = 'http://localhost';
 const port = 5000;
 
 const app = express();
+app.use(methodOverride());
 app.use(cors());
-app.options('*', cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 mongoose.connect(mongoURIConnection, {useNewUrlParser: true});
 const db = mongoose.connection;
@@ -32,14 +37,20 @@ db.on('SIGINT', () => {
     process.exit();
 });
 
-app.get('/api/customers', (req, res) => {
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-  ];
+app.post('/api/test/url', (req, res) => {
+    const url = req.body.url;
+    console.log(req.body);
+    //const page = getData(url);
 
-  res.json(customers);
+    res.send(req.body);
 });
+
+const getData = async url => {
+    try {
+        return await fetch(url);
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 app.listen(port, () => `Server running on port ${port}`);
