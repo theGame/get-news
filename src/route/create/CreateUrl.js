@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { SIZES } from './../../constants/index.js';
 import UrlButtons from './UrlButtons';
 import UrlSatus from './UrlStatus';
 import TransferProtocol from './TransferProtocol';
 import { Input, Grid, Loader } from 'semantic-ui-react';
-import urlHelper from './../../utils/urlHelper';
+import { addUrl, testUrl,  } from "./../../actions/urlActions";
 
 class CreateUrl extends Component {
     constructor(props) {
@@ -13,9 +14,6 @@ class CreateUrl extends Component {
         this.state = {
             url: '',
             isTested: false,
-            isLoading: true,
-            actions: [],
-            status: {},
             protocolType: '',
         }
     }
@@ -24,38 +22,25 @@ class CreateUrl extends Component {
         this.setState({
             url: e.target.value,
             isTested: false,
-            isLoading: false
         });
     };
 
-    handleTestUrl = async () => {
-        this.setState({isLoading: true});
-
-        try {
-            const testedUrl = await urlHelper.getWebPage('https://github.com/jsdom/jsdom/tree/master/scripts/webidl');
-            console.log(testedUrl);
-            //this.props.addUrl(result);
-        } catch (err) {
-            console.log(err.status);
-            //this.props.addUrl(err);
-        } finally {
-            console.log('finally');
-            this.setState({isLoading: false});
-        }
+    handleTestUrl = () => {
+        // this.props.testUrl(this.state.url);
+        this.props.testUrl("https://github.com/jsdom/jsdom/tree/master/scripts/webidl");
     };
 
-    handleSaveUrl = () => {
-        this.setState((state) => ({
-            actions: [...state, {url: state.url, status: state.status}]
-        }));
-        // TODO: api save url
+    handleAddUrl = () => {
+        // this.props.addUrl(this.state.url);
+        this.props.addUrl("https://github.com/jsdom/jsdom/tree/master/scripts/webidl");
     };
 
     handleProtocolUpdate = (protocolType) => this.setState({ protocolType });
 
     render() {
-        const { url, isLoading, isTested, protocolType, status } = this.state;
-        console.log(this.state);
+        const { url, isTested, protocolType } = this.state;
+        const { isLoading, statuses } = this.props;
+
         return (
             <section className="add-url-wrapper">
                 <Grid divided>
@@ -71,17 +56,19 @@ class CreateUrl extends Component {
                         />
                         <UrlButtons
                             isAddUrlDisabled={isTested}
-                            isTestUrlDisabled={false}
+                            isTestUrlDisabled={isLoading}
                             onTestUrl={this.handleTestUrl}
-                            onSaveResponse={this.handleSaveUrl}
+                            onSaveResponse={this.handleAddUrl}
                         />
                     </Grid.Row>
                     <Grid.Row centered>
-                        <div className="loader-wrapper">
-                            <Loader active={isLoading} size={SIZES.HUGE} />
-                        </div>
+                        {isLoading && (
+                            <div className="loader-wrapper">
+                                <Loader active={true} size={SIZES.HUGE} />
+                            </div>
+                        )}
 
-                        {!isLoading && status && <UrlSatus />}
+                        {!isLoading && !!statuses.length && <UrlSatus statuses={this.props.statuses}/>}
                     </Grid.Row>
                 </Grid>
             </section>
@@ -89,4 +76,13 @@ class CreateUrl extends Component {
     }
 };
 
-export default CreateUrl;
+const mapStateToProps = ({ url }) => ({
+    isLoading: url.isLoading,
+    statuses: url.statuses,
+});
+const mapDispatchToProps = dispatch => ({
+    testUrl: url => dispatch(testUrl(url)),
+    addUrl: url => dispatch(addUrl(url)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUrl);

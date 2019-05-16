@@ -9,6 +9,11 @@ export const SIZES = Object.freeze({
 	MASSIVE:'massive' 
 });
 
+export const COLORS = Object.freeze({
+    RED: "red",
+    BLUE: "blue",
+});
+
 export const API = Object.freeze({
 	TEST_URL: '/api/test/url'
 });

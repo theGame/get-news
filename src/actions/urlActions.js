@@ -4,19 +4,20 @@ import urlHelper from './../utils/urlHelper';
 export const Types = {
     ADD_URL: "ADD_URL",
     LOADING_URL: "LOADING_URL",
-    TESTED_URL: "TESTED_URL",
     SAVE_URL: "SAVE_URL",
+    SUCCESS_RESPONSE: "SUCCESS_RESPONSE",
+    ERROR_RESPONSE: "ERROR_RESPONSE",
 };
 
 // actions
-export const addUrl = payload => ({
-    type: Types.ADD_URL,
-    payload: payload
+
+export const successResponse = payload => ({
+    type: Types.SUCCESS_RESPONSE,
+    payload
 });
 
-
-export const saveResponse = payload => ({
-    type: Types.LOADING_URL,
+export const errorResponse = payload => ({
+    type: Types.ERROR_RESPONSE,
     payload
 });
 
@@ -24,28 +25,22 @@ export const urlLoading = () => ({
     type: Types.LOADING_URL,
 });
 
-export const testUrl = url => {
-    return async (dispatch) => {
+export const testUrl = url => async dispatch => {
+    try {
         dispatch(urlLoading());
-
-        try {
-            const result = await urlHelper.getWebPage(url);
-            dispatch(addUrl(result));
-        } catch (err) {
-            dispatch(addUrl(err));
-        }
-    };
+        const result = await urlHelper.getWebPage(url);
+        dispatch(successResponse(result.data));
+    } catch (err) {
+        dispatch(errorResponse(err));
+    }
 };
 
-export const saveUrl = url => {
-    return async (dispatch) => {
+export const addUrl = url => async dispatch => {
+    try {
         dispatch(urlLoading());
-
-        try {
-            const result = await urlHelper.getWebPage(url);
-            dispatch(saveResponse(result));
-        } catch (err) {
-            dispatch(saveResponse(err));
-        }
-    };
+        const result = await urlHelper.getWebPage(url);
+        dispatch(successResponse(result.data));
+    } catch (err) {
+        dispatch(errorResponse(err));
+    }
 };

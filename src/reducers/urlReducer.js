@@ -1,19 +1,22 @@
 import { Types } from "./../actions/urlActions";
 
 const defaultState = {
-    urls: [],
+    statuses: [],
     isLoading: false,
-    isTested: false
 };
 
 const url = (state = defaultState, action) => {
     switch (action.type) {
         case Types.LOADING_URL:
+            return Object.assign({}, {...state}, {isLoading: true} );
+        case Types.ERROR_RESPONSE:
             return Object.assign({}, {...state}, {isLoading: false} );
-        case Types.TESTED_URL:
-            return Object.assign({}, {...state}, {isLoading: false} );
-        case Types.LOADING_URL:
-            return Object.assign({}, {...state}, {isLoading: false} );
+        case Types.SUCCESS_RESPONSE:
+            return Object.assign(
+                {},
+                {...state},
+                {isLoading: false},
+                {statuses: [...state.statuses, action.payload ]});
 
             case Types.ADD_URL:
             return Object.assign({}, {...action.payload}, {...state} );

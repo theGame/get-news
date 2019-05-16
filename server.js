@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
-const fetch = require("node-fetch");
+const request = require("request");
 
 const mongoURIConnection = 'mongodb://test:Qwerty1!@ds251894.mlab.com:51894/news-db';
 const host = 'http://localhost';
@@ -36,21 +36,39 @@ db.on('SIGINT', () => {
     db.close();
     process.exit();
 });
+app.post('/api/add/url', (req, res) => {
+    request({
+        uri: url,
+    }, function(err, response, body) {
 
-app.post('/api/test/url', (req, res) => {
-    const url = req.body.url;
-    console.log(req.body);
-    //const page = getData(url);
-
-    res.send(req.body);
+    });
 });
 
-const getData = async url => {
-    try {
-        return await fetch(url);
-    } catch (err) {
-        console.log(err);
-    }
-};
+app.post('/api/test/url', (req, res) => {
+    const { url } = req.body;
+
+    request({
+        uri: url,
+    }, function(err, response) {
+        console.log(response);
+        debugger
+        if (err) {
+            res.status(404).json({
+                error: "Your address is not correct!",
+                code: err.code,
+                hostname: err.hostname
+            });
+            return;
+        }
+
+        res.status(200).json({
+            url: response.url,
+            statusCode: response.statusCode,
+            statusMessage: response.statusMessage,
+            contentType: "",
+            serverName: response.headers.server,
+        });
+    });
+});
 
 app.listen(port, () => `Server running on port ${port}`);

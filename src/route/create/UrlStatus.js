@@ -1,20 +1,14 @@
+import React from "react";
+import { Card } from "semantic-ui-react";
+import { COLORS } from "./../../constants";
 
-import React, { PureComponent } from 'react';
-import { Card } from 'semantic-ui-react';
-
-class UrlStatus extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    render() {
+export default function UrlStatus({ statuses }) {
+    return statuses.map( (item, index)  => {
         return (
-            <Card.Group>
-                <Card color='red' header='Option 1' />
+            <Card.Group key={index}>
+                {item.error && <Card color={COLORS.RED} header={item.serverName} />}
+                {!item.error && <Card color={COLORS.BLUE} header={item.serverName} />}
             </Card.Group>
         );
-    }
-}
-
-export default UrlStatus;
+    });
+};
