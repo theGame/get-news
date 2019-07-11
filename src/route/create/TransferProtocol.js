@@ -1,21 +1,21 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { SIZES } from './../../constants';
+import { SIZES, PROTOCOL_TYPE } from './../../constants';
 import { Dropdown } from 'semantic-ui-react';
 
 class TransferProtocol extends PureComponent {
 
     handleChange = (e, { value }) => this.props.onUpdate(value);
     render() {
-        const options = this.props.transferOptions;
+        const { type, transferOptions } = this.props;
         return (
             <Dropdown
                 className={`${SIZES.HUGE} compact`}
-                options={options}
+                options={transferOptions}
                 size={SIZES.HUGE}
                 search
                 selection
-                defaultValue={options[0].value}
+                defaultValue={type}
                 onChange={this.handleChange}
             />
         );
@@ -25,12 +25,12 @@ class TransferProtocol extends PureComponent {
 TransferProtocol.defaultProps = {
     transferOptions: [{
         key: 1,
-        value: 'HTTP',
-        text: 'HTTP'
+        value: PROTOCOL_TYPE.HTTP,
+        text: PROTOCOL_TYPE.HTTP,
     }, {
         key: 2,
-        value: 'HTTPS',
-        text: 'HTTPS'
+        value: PROTOCOL_TYPE.HTTPS,
+        text: PROTOCOL_TYPE.HTTPS,
     }]
 };
 

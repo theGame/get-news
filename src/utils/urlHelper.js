@@ -10,7 +10,7 @@ class UrlHelper {
         },
     };
 
-    getWebPage = ( url ) => axios.post(API.TEST_URL, { url }, this.config);
+    getWebPage = ( url ) => axios.post(API.TEST_URL, { url },/* this.config*/);
 };
 
 export default new UrlHelper();

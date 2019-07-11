@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIZES } from './../../constants/index.js';
+import { SIZES, PROTOCOL_TYPE } from './../../constants/index.js';
 import UrlButtons from './UrlButtons';
 import UrlSatus from './UrlStatus';
 import TransferProtocol from './TransferProtocol';
@@ -14,7 +14,7 @@ class CreateUrl extends Component {
         this.state = {
             url: '',
             isTested: false,
-            protocolType: '',
+            protocolType: PROTOCOL_TYPE.HTTP,
         }
     }
 
@@ -26,13 +26,26 @@ class CreateUrl extends Component {
     };
 
     handleTestUrl = () => {
-        // this.props.testUrl(this.state.url);
-        this.props.testUrl("https://github.com/jsdom/jsdom/tree/master/scripts/webidl");
+        const url = this.getUrlFromInput();
+        this.props.testUrl(url);
     };
 
     handleAddUrl = () => {
-        // this.props.addUrl(this.state.url);
-        this.props.addUrl("https://github.com/jsdom/jsdom/tree/master/scripts/webidl");
+        const url = this.getUrlFromInput();
+        this.props.addUrl(url);
+    };
+
+    getUrlFromInput = () => `${this.state.protocolType.toLowerCase()}://${this.state.url}`;
+    isTestDisabled = () => {
+        const { isLoading } = this.props;
+        const { url } = this.state;
+
+        return isLoading || !url;
+    };
+    isAddDisabled = () => {
+        const { isTested } = this.state;
+
+        return this.isTestDisabled() || !isTested;
     };
 
     handleProtocolUpdate = (protocolType) => this.setState({ protocolType });
@@ -55,8 +68,8 @@ class CreateUrl extends Component {
                             onChange={e => {this.handleInputChange(e)}}
                         />
                         <UrlButtons
-                            isAddUrlDisabled={isTested}
-                            isTestUrlDisabled={isLoading}
+                            isAddUrlDisabled={this.isAddDisabled()}
+                            isTestUrlDisabled={this.isTestDisabled()}
                             onTestUrl={this.handleTestUrl}
                             onSaveResponse={this.handleAddUrl}
                         />
