@@ -15,7 +15,13 @@ class CreateUrl extends Component {
             url: '',
             isTested: false,
             protocolType: PROTOCOL_TYPE.HTTP,
-        }
+        };
+
+        this.searchInput = React.createRef();
+    }
+
+    componentDidMount() {
+        this.searchInput.current.focus();
     }
 
     handleInputChange = (e) => {
@@ -35,6 +41,12 @@ class CreateUrl extends Component {
         this.props.addUrl(url);
     };
 
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            this.handleTestUrl();
+        }
+    };
+
     getUrlFromInput = () => `${this.state.protocolType.toLowerCase()}://${this.state.url}`;
     isTestDisabled = () => {
         const { isLoading } = this.props;
@@ -51,16 +63,18 @@ class CreateUrl extends Component {
     handleProtocolUpdate = (protocolType) => this.setState({ protocolType });
 
     render() {
-        const { url, isTested, protocolType } = this.state;
+        const { url, protocolType } = this.state;
         const { isLoading, statuses } = this.props;
 
         return (
             <section className="add-url-wrapper">
-                <Grid divided>
+                <Grid divided className="url-wrapper">
                     <Grid.Row centered>
                         <TransferProtocol type={protocolType} onUpdate={this.handleProtocolUpdate} />
                         <span className={`${SIZES.HUGE} ui label transparent url-helper`}>://</span>
                         <Input
+                            onKeyPress={this.handleKeyPress}
+                            ref={this.searchInput}
                             size={SIZES.HUGE}
                             icon='search'
                             placeholder='Want more news?'
@@ -74,7 +88,7 @@ class CreateUrl extends Component {
                             onSaveResponse={this.handleAddUrl}
                         />
                     </Grid.Row>
-                    <Grid.Row centered>
+                    <Grid.Row centered className="statuses-wrapper">
                         {isLoading && (
                             <div className="loader-wrapper">
                                 <Loader active={true} size={SIZES.HUGE} />

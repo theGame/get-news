@@ -1,7 +1,32 @@
+@import "colors";
+
 .add-url-wrapper{
-  .loader-wrapper{
-    margin-top: 25px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: $bg-color;
+
+  .ui.buttons.url-group-buttons{
+    margin-left: 10px !important;
   }
+
+  & .url-wrapper{
+    padding-top: 320px !important;
+
+    input{
+      width: 450px;
+    }
+  }
+
+  & .statuses-wrapper{
+    .loader-wrapper{
+      margin-top: 25px;
+    }
+  }
+
   .url-helper{
     display: flex !important;
     align-items: center;

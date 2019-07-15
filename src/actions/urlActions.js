@@ -31,7 +31,7 @@ export const testUrl = url => async dispatch => {
         const result = await urlHelper.getWebPage(url);
         dispatch(successResponse(result.data));
     } catch (err) {
-        dispatch(errorResponse(err));
+        dispatch(errorResponse(err.response));
     }
 };
 

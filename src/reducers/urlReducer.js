@@ -10,7 +10,15 @@ const url = (state = defaultState, action) => {
         case Types.LOADING_URL:
             return Object.assign({}, {...state}, {isLoading: true} );
         case Types.ERROR_RESPONSE:
-            return Object.assign({}, {...state}, {isLoading: false} );
+            return Object.assign(
+                {},
+                {...state},
+                {isLoading: false},
+                {statuses: [...state.statuses, {
+                    url: action.payload.data.hostname,
+                    statusCode: action.payload.status,
+                    statusMessage: action.payload.statusText,
+                }]});
         case Types.SUCCESS_RESPONSE:
             return Object.assign(
                 {},

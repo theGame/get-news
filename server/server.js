@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect(mongoURIConnection, {useNewUrlParser: true});
+mongoose.connect(mongoURIConnection, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.on('connected', () => {
@@ -39,6 +39,5 @@ db.on('SIGINT', () => {
 
 //  Connect all our routes to our application
 app.use('/', routes);
-
 
 app.listen(port, () => `Server running on port ${port}`);

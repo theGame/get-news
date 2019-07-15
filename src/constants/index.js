@@ -12,6 +12,8 @@ export const SIZES = Object.freeze({
 export const COLORS = Object.freeze({
     RED: "red",
     BLUE: "blue",
+	GREEN: "green",
+	YELLOW: "yellow",
 });
 
 export const API = Object.freeze({
