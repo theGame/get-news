@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIZES, PROTOCOL_TYPE } from './../../constants/index.js';
+import { SIZES, PROTOCOL_TYPE } from './../../constants';
 import UrlButtons from './UrlButtons';
 import UrlSatus from './UrlStatus';
 import TransferProtocol from './TransferProtocol';
 import { Input, Grid, Loader } from 'semantic-ui-react';
-import { addUrl, testUrl,  } from "./../../actions/urlActions";
+import { addUrl, testUrl  } from "./../../actions/urlActions";
 
 class CreateUrl extends Component {
     constructor(props) {
@@ -13,11 +13,26 @@ class CreateUrl extends Component {
 
         this.state = {
             url: '',
-            isTested: false,
             protocolType: PROTOCOL_TYPE.HTTP,
+            isAbleToSaveUrl: false,
         };
 
         this.searchInput = React.createRef();
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if(props.statuses !== state.statuses) {
+            return { statuses: props.statuses };
+        }
+
+        return null;
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevState.statuses.length !== this.state.statuses.length && this.state.statuses[0].statusCode === 200){
+            this.setState({isAbleToSaveUrl: true});
+        }
+        console.log(this.state);
     }
 
     componentDidMount() {
@@ -27,7 +42,7 @@ class CreateUrl extends Component {
     handleInputChange = (e) => {
         this.setState({
             url: e.target.value,
-            isTested: false,
+            isAbleToSaveUrl: false,
         });
     };
 
@@ -42,7 +57,9 @@ class CreateUrl extends Component {
     };
 
     handleKeyPress = (event) => {
-        if(event.key === 'Enter'){
+        const { url } = this.state;
+
+        if(event.key === "Enter" && url){
             this.handleTestUrl();
         }
     };
@@ -55,16 +72,16 @@ class CreateUrl extends Component {
         return isLoading || !url;
     };
     isAddDisabled = () => {
-        const { isTested } = this.state;
+        const { isAbleToSaveUrl } = this.state;
 
-        return this.isTestDisabled() || !isTested;
+        return this.isTestDisabled() || !isAbleToSaveUrl;
     };
 
     handleProtocolUpdate = (protocolType) => this.setState({ protocolType });
 
     render() {
-        const { url, protocolType } = this.state;
-        const { isLoading, statuses } = this.props;
+        const { url, protocolType, statuses } = this.state;
+        const { isLoading } = this.props;
 
         return (
             <section className="add-url-wrapper">
@@ -88,14 +105,14 @@ class CreateUrl extends Component {
                             onSaveResponse={this.handleAddUrl}
                         />
                     </Grid.Row>
-                    <Grid.Row centered className="statuses-wrapper">
+
+                    <Grid.Row className="statuses-wrapper">
                         {isLoading && (
                             <div className="loader-wrapper">
                                 <Loader active={true} size={SIZES.HUGE} />
                             </div>
                         )}
-
-                        {!isLoading && !!statuses.length && <UrlSatus statuses={this.props.statuses}/>}
+                        {!isLoading && !!statuses.length && <UrlSatus statuses={statuses}/>}
                     </Grid.Row>
                 </Grid>
             </section>

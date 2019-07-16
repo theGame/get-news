@@ -2,22 +2,34 @@ import urlHelper from './../utils/urlHelper';
 
 // types of action
 export const Types = {
-    ADD_URL: "ADD_URL",
     LOADING_URL: "LOADING_URL",
-    SAVE_URL: "SAVE_URL",
-    SUCCESS_RESPONSE: "SUCCESS_RESPONSE",
-    ERROR_RESPONSE: "ERROR_RESPONSE",
+
+    SAVE_URL_SUCCESS: "SAVE_URL_SUCCESS",
+    SAVE_URL_FAIL: "SAVE_URL_FAIL",
+
+    TEST_URL_SUCCESS: "TEST_URL_SUCCESS",
+    TEST_URL_FAIL: "TEST_URL_FAIL",
 };
 
 // actions
 
-export const successResponse = payload => ({
-    type: Types.SUCCESS_RESPONSE,
+export const successTestResponse = payload => ({
+    type: Types.TEST_URL_SUCCESS,
     payload
 });
 
-export const errorResponse = payload => ({
-    type: Types.ERROR_RESPONSE,
+export const errorTestResponse = payload => ({
+    type: Types.TEST_URL_FAIL,
+    payload
+});
+
+export const successSaveResponse = payload => ({
+    type: Types.SAVE_URL_SUCCESS,
+    payload
+});
+
+export const errorSaveResponse = payload => ({
+    type: Types.SAVE_URL_FAIL,
     payload
 });
 
@@ -28,19 +40,19 @@ export const urlLoading = () => ({
 export const testUrl = url => async dispatch => {
     try {
         dispatch(urlLoading());
-        const result = await urlHelper.getWebPage(url);
-        dispatch(successResponse(result.data));
+        const result = await urlHelper.testWebPage(url);
+        dispatch(successTestResponse(result.data));
     } catch (err) {
-        dispatch(errorResponse(err.response));
+        dispatch(errorTestResponse(err.response));
     }
 };
 
 export const addUrl = url => async dispatch => {
     try {
         dispatch(urlLoading());
-        const result = await urlHelper.getWebPage(url);
-        dispatch(successResponse(result.data));
+        const result = await urlHelper.saveWebPage(url);
+        dispatch(successSaveResponse(result.data));
     } catch (err) {
-        dispatch(errorResponse(err));
+        dispatch(errorSaveResponse(err));
     }
 };

@@ -2,15 +2,26 @@ import axios from 'axios';
 import { API } from './../constants';
 
 class UrlHelper {
-    config = {
-        headers: {
-            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            "Access-Control-Allow-Origin": "*",
-        },
-    };
+    testWebPage = url => axios.post(API.TEST_URL, { url });
+    saveWebPage = url => axios.post(API.ADD_URL, { url });
+    openUrlInNewTab = url => window.open(url, "_blank");
 
-    getWebPage = ( url ) => axios.post(API.TEST_URL, { url },/* this.config*/);
+    markStatusesAsSaved = (list, url, server) => {
+        return list.map( item => {
+            if(server === item.serverName && url === item.url) {
+                item.isSaved = true;
+            }
+            return item;
+        });
+    };
+    markStatusesAsFailed = (list, url, server) => {
+        return list.map( item => {
+            if(server === item.serverName && url === item.url) {
+                item.isFailed = true;
+            }
+            return item;
+        });
+    };
 };
 
 export default new UrlHelper();

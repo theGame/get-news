@@ -14,7 +14,11 @@
   }
 
   & .url-wrapper{
-    padding-top: 320px !important;
+    padding-top: 200px !important;
+
+    & > .row:first-child{
+      background: $bg-color;
+    }
 
     input{
       width: 450px;
@@ -22,8 +26,18 @@
   }
 
   & .statuses-wrapper{
+    display: flex !important;
+    justify-content: center !important;
+
     .loader-wrapper{
       margin-top: 25px;
+    }
+    .header{ cursor: pointer; }
+    .cards{
+      width: 575px !important;
+      .card{
+        width: 100%;
+      }
     }
   }
 

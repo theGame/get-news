@@ -18,9 +18,10 @@ export const COLORS = Object.freeze({
 
 export const API = Object.freeze({
 	TEST_URL: "/api/test/url",
+	ADD_URL: "/api/add/url",
 });
 
-export const PROTOCOL_TYPE = {
+export const PROTOCOL_TYPE = Object.freeze({
 	HTTP: "HTTP",
 	HTTPS: "HTTPS",
-};
+});

@@ -1,4 +1,5 @@
 import { Types } from "./../actions/urlActions";
+import urlHelper from "./../utils/urlHelper";
 
 const defaultState = {
     statuses: [],
@@ -9,25 +10,34 @@ const url = (state = defaultState, action) => {
     switch (action.type) {
         case Types.LOADING_URL:
             return Object.assign({}, {...state}, {isLoading: true} );
-        case Types.ERROR_RESPONSE:
+        case Types.TEST_URL_FAIL:
             return Object.assign(
                 {},
                 {...state},
                 {isLoading: false},
-                {statuses: [...state.statuses, {
-                    url: action.payload.data.hostname,
-                    statusCode: action.payload.status,
-                    statusMessage: action.payload.statusText,
-                }]});
-        case Types.SUCCESS_RESPONSE:
+                {statuses: [{
+                        url: action.payload.data.hostname,
+                        statusCode: action.payload.status,
+                        statusMessage: action.payload.statusText,
+                    }, ...state.statuses]});
+        case Types.TEST_URL_SUCCESS:
             return Object.assign(
                 {},
                 {...state},
                 {isLoading: false},
-                {statuses: [...state.statuses, action.payload ]});
+                {statuses: [action.payload, ...state.statuses ]});
 
-            case Types.ADD_URL:
-            return Object.assign({}, {...action.payload}, {...state} );
+        case Types.SAVE_URL_SUCCESS:
+            const { statuses } = state;
+            const { url, serverName } = action.payload;
+
+            const newStatuses = urlHelper.markStatusesAsSaved(statuses, url, serverName);
+
+            return Object.assign(
+                {},
+                {...state},
+                {isLoading: false},
+                {statuses: newStatuses} );
         default:
             return state;
     }
