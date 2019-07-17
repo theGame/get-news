@@ -5,7 +5,7 @@ import urlHelper from "./../../utils/urlHelper";
 
 function getThreeLatestUrls(list) {
     return list.slice(0, 3);
-};
+}
 
 export default function UrlStatus({ statuses }) {
     const list = getThreeLatestUrls(statuses);

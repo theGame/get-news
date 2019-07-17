@@ -58,7 +58,6 @@ routes.post("/api/add/url", (req, res) => {
             });
         });
     });
-
 });
 
 routes.post("/api/test/url", (req, res) => {
@@ -81,6 +80,30 @@ routes.post("/api/test/url", (req, res) => {
             statusCode: response.statusCode,
             statusMessage: response.statusMessage,
             serverName: response.headers.server,
+        });
+    });
+});
+
+routes.get("/api/urls", (req, res) => {
+    Url.find({}, (err, urlsList) => {
+        if (err) {
+            res.status(404).json({
+                error: err,
+                code: err && err.code || "",
+                hostname: err && err.hostname || "",
+            });
+            return;
+        }
+
+        const urls = urlsList.map(item => ({
+            id: item._id,
+            url: item.url,
+            serverName: item.serverName,
+            createdAt: item.createdAt,
+        }));
+
+        res.status(200).json({
+            list: urls,
         });
     });
 });

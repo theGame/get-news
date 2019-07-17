@@ -28,16 +28,19 @@ const url = (state = defaultState, action) => {
                 {statuses: [action.payload, ...state.statuses ]});
 
         case Types.SAVE_URL_SUCCESS:
-            const { statuses } = state;
-            const { url, serverName } = action.payload;
-
-            const newStatuses = urlHelper.markStatusesAsSaved(statuses, url, serverName);
-
             return Object.assign(
                 {},
                 {...state},
                 {isLoading: false},
-                {statuses: newStatuses} );
+                {statuses: urlHelper.markStatusesAsSaved(state.statuses, action.payload.url, action.payload.serverName)} );
+
+        case Types.SAVE_URL_FAIL:
+            return Object.assign(
+                {},
+                {...state},
+                {isLoading: false},
+                {statuses: urlHelper.markStatusesAsFailed(state.statuses, action.payload.url, action.payload.serverName)} );
+
         default:
             return state;
     }

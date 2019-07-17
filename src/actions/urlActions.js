@@ -1,6 +1,5 @@
 import urlHelper from './../utils/urlHelper';
 
-// types of action
 export const Types = {
     LOADING_URL: "LOADING_URL",
 
@@ -10,8 +9,6 @@ export const Types = {
     TEST_URL_SUCCESS: "TEST_URL_SUCCESS",
     TEST_URL_FAIL: "TEST_URL_FAIL",
 };
-
-// actions
 
 export const successTestResponse = payload => ({
     type: Types.TEST_URL_SUCCESS,

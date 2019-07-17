@@ -14,14 +14,20 @@
   }
 
   & .url-wrapper{
+    position: relative;
     padding-top: 200px !important;
 
     & > .row:first-child{
       background: $bg-color;
     }
 
+    & .ui.form .label{
+      position: absolute;
+      top: -50px;
+    }
+
     input{
-      width: 450px;
+      width: 450px !important;
     }
   }
 
