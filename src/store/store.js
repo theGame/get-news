@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import logger from "redux-logger";
-import url from "./../reducers/urlReducer";
+import addUrls from "../reducers/urlStatusesReducer";
+import listUrls from "../reducers/urlListReducer";
 import thunk from 'redux-thunk';
 
 const reducers = combineReducers({
-    url,
+    addUrls,
+    listUrls,
 });
 
 export default function configureStore() {

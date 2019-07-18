@@ -9,10 +9,6 @@
 
   background: $bg-color;
 
-  .ui.buttons.url-group-buttons{
-    margin-left: 10px !important;
-  }
-
   & .url-wrapper{
     position: relative;
     padding-top: 200px !important;
@@ -50,5 +46,9 @@
   .url-helper{
     display: flex !important;
     align-items: center;
+  }
+
+  .ui.buttons.url-group-buttons{
+    margin-left: 10px !important;
   }
 }

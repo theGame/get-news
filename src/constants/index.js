@@ -14,11 +14,21 @@ export const COLORS = Object.freeze({
     BLUE: "blue",
 	GREEN: "green",
 	YELLOW: "yellow",
+	TEAL: "teal",
+
+	CUSTOM_TEAL: "#4ca5a157",
+});
+
+export const ROUTES = Object.freeze({
+	HOME: "/",
+	LIST: "/list",
+	LOGIN: "/login",
 });
 
 export const API = Object.freeze({
 	TEST_URL: "/api/test/url",
 	ADD_URL: "/api/add/url",
+	GET_LIST: "/api/urls",
 });
 
 export const PROTOCOL_TYPE = Object.freeze({

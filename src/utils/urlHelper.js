@@ -4,6 +4,7 @@ import { API } from './../constants';
 class UrlHelper {
     testWebPage = url => axios.post(API.TEST_URL, { url });
     saveWebPage = url => axios.post(API.ADD_URL, { url });
+    getListOfUrls = () => axios.get(API.GET_LIST);
     openUrlInNewTab = url => window.open(url, "_blank");
 
     markStatusesAsSaved = (list, url, server) => {

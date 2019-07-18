@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { SIZES, PROTOCOL_TYPE } from './../../constants';
+import { SIZES, PROTOCOL_TYPE } from '../../../constants';
 import { Dropdown } from 'semantic-ui-react';
 
 class TransferProtocol extends PureComponent {

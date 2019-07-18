@@ -1,0 +1,19 @@
+@import "colors";
+
+.header-bar{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 1;
+
+  padding: 10px 30px;
+
+  & button.button{
+    background: $bg-color;
+
+    &:hover, &:focus{
+      background: $bg-focus-color;
+    }
+  }
+}

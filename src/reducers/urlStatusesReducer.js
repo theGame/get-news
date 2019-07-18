@@ -1,4 +1,4 @@
-import { Types } from "./../actions/urlActions";
+import { Types } from "../actions/urlStatusesActions";
 import urlHelper from "./../utils/urlHelper";
 
 const defaultState = {
@@ -6,7 +6,7 @@ const defaultState = {
     isLoading: false,
 };
 
-const url = (state = defaultState, action) => {
+const addUrls = (state = defaultState, action) => {
     switch (action.type) {
         case Types.LOADING_URL:
             return Object.assign({}, {...state}, {isLoading: true} );
@@ -46,4 +46,4 @@ const url = (state = defaultState, action) => {
     }
 };
 
-export default url;
+export default addUrls;

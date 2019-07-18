@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { SIZES, PROTOCOL_TYPE, COLORS, REG_EXPS } from './../../constants';
-import UrlButtons from './UrlButtons';
-import UrlSatus from './UrlStatus';
-import TransferProtocol from './TransferProtocol';
-import { Input, Grid, Loader, Form, Label } from 'semantic-ui-react';
-import { addUrl, testUrl  } from "./../../actions/urlActions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { SIZES, PROTOCOL_TYPE, COLORS, REG_EXPS } from "./../../constants";
+import UrlButtons from "./Components/UrlButtons";
+import UrlStatus from "./Components/UrlStatus";
+import TransferProtocol from "./Components/TransferProtocol";
+import HeaderBar from "../../common/HeaderBar/HeaderBar";
+import { Input, Grid, Loader, Form, Label } from "semantic-ui-react";
+import { addUrl, testUrl  } from "../../actions/urlStatusesActions";
 
 class CreateUrl extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            url: '',
+            url: "",
             protocolType: PROTOCOL_TYPE.HTTP,
             isAbleToSaveUrl: false,
             isUrlValid: true,
@@ -71,7 +72,6 @@ class CreateUrl extends Component {
     };
 
     handleKeyPress = (event) => {
-        /*debugger*/
         const { url } = this.state;
 
         if(event.key === "Enter" && url){
@@ -100,6 +100,7 @@ class CreateUrl extends Component {
 
         return (
             <section className="add-url-wrapper">
+                <HeaderBar history={this.props.history} />
                 <Grid divided className="url-wrapper">
                     <Grid.Row centered>
                         <TransferProtocol type={protocolType} onUpdate={this.handleProtocolUpdate} />
@@ -113,8 +114,8 @@ class CreateUrl extends Component {
                                     onKeyPress={this.handleKeyPress}
                                     ref={this.searchInput}
                                     size={SIZES.HUGE}
-                                    icon='search'
-                                    placeholder='Want more news?'
+                                    icon="search"
+                                    placeholder="Want more news?"
                                     value={url}
                                     onChange={e => {this.handleInputChange(e)}}
                                 />
@@ -134,7 +135,7 @@ class CreateUrl extends Component {
                                 <Loader active={true} size={SIZES.HUGE} />
                             </div>
                         )}
-                        {!isLoading && !!statuses.length && <UrlSatus statuses={statuses}/>}
+                        {!isLoading && !!statuses.length && <UrlStatus statuses={statuses}/>}
                     </Grid.Row>
                 </Grid>
             </section>
@@ -142,10 +143,11 @@ class CreateUrl extends Component {
     }
 };
 
-const mapStateToProps = ({ url }) => ({
-    isLoading: url.isLoading,
-    statuses: url.statuses,
+const mapStateToProps = ({ addUrls }) => ({
+    isLoading: addUrls.isLoading,
+    statuses: addUrls.statuses,
 });
+
 const mapDispatchToProps = dispatch => ({
     testUrl: url => dispatch(testUrl(url)),
     addUrl: url => dispatch(addUrl(url)),

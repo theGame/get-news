@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { SIZES } from './../../constants/index.js';
+import { SIZES } from '../../../constants';
 import { Button, Icon } from 'semantic-ui-react';
 
 const UrlButtons = ({

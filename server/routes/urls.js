@@ -1,7 +1,6 @@
 const routes = require("express").Router();
 const request = require("request");
 const mongoose = require("mongoose");
-
 const Url = require("./../models/urls");
 
 routes.post("/api/add/url", (req, res) => {
@@ -95,7 +94,7 @@ routes.get("/api/urls", (req, res) => {
             return;
         }
 
-        const urls = urlsList.map(item => ({
+        const list = urlsList.map(item => ({
             id: item._id,
             url: item.url,
             serverName: item.serverName,
@@ -103,7 +102,7 @@ routes.get("/api/urls", (req, res) => {
         }));
 
         res.status(200).json({
-            list: urls,
+            list,
         });
     });
 });

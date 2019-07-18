@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Label, Divider } from "semantic-ui-react";
-import { COLORS } from "./../../constants";
-import urlHelper from "./../../utils/urlHelper";
+import { COLORS } from "../../../constants";
+import urlHelper from "../../../utils/urlHelper";
 
 function getThreeLatestUrls(list) {
     return list.slice(0, 3);
