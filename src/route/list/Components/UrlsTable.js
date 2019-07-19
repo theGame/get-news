@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Table, Button, Container, Header } from "semantic-ui-react";
 
-const UrlsTable = ({ list }) => {
+const UrlsTable = ({ list, onRemove }) => {
     return (
         <section className="table-wrapper">
             <Container>
@@ -26,7 +26,7 @@ const UrlsTable = ({ list }) => {
                                     <Table.Cell>{item.createdAt}</Table.Cell>
                                     <Table.Cell>
                                         <Button.Group basic size="small">
-                                            <Button icon="delete" onClick={() => console.log("remove")}/>
+                                            <Button icon="delete" onClick={() => onRemove(item.id)}/>
                                             <Button icon="mail" onClick={() => console.log("mail")} />
                                         </Button.Group>
                                     </Table.Cell>

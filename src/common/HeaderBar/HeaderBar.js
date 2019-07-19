@@ -3,8 +3,6 @@ import { Button, Icon } from "semantic-ui-react";
 import {ROUTES, SIZES} from "./../../constants";
 
 const shouldShowBtn = (path) => {
-    console.log(path);
-    console.log(window.location.pathname);
     return path !== window.location.pathname;
 };
 

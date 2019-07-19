@@ -26,9 +26,10 @@ export const ROUTES = Object.freeze({
 });
 
 export const API = Object.freeze({
-	TEST_URL: "/api/test/url",
-	ADD_URL: "/api/add/url",
-	GET_LIST: "/api/urls",
+	TEST_URL: () => "/api/test/url",
+	ADD_URL: () => "/api/add/url",
+	GET_LIST: () => "/api/urls",
+	DELETE_URL: id => `/api/delete/url/${id}`
 });
 
 export const PROTOCOL_TYPE = Object.freeze({

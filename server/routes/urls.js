@@ -107,4 +107,22 @@ routes.get("/api/urls", (req, res) => {
     });
 });
 
+routes.delete("/api/delete/url/:id", (req, res) => {
+    Url.remove({ _id: req.params.id}, function(err) {
+
+        if(err) {
+            res.status(404).json({
+                error: err,
+                code: err && err.code || "",
+                hostname: err && err.hostname || "",
+            });
+            return;
+        }
+
+        res.status(200).json({
+            msg: `Url with id: ${req.params.id} successfully removed!`,
+        });
+    })
+});
+
 module.exports = routes;
