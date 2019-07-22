@@ -9,7 +9,11 @@
 
   background: $bg-color;
 
-  .table-wrapper{
-    padding-top: 200px;
+  & .segment{
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+
+    margin-top: 200px !important;
   }
 }

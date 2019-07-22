@@ -8,16 +8,19 @@ export const Types = {
 
     REMOVE_URL_SUCCESS: "REMOVE_URL_SUCCESS",
     REMOVE_URL_FAIL: "REMOVE_URL_FAILED",
+
+    REMOVE_URL_DONE_NOTIFICATION: "REMOVE_URL_DONE_NOTIFICATION",
+    REMOVE_URL_FAIL_NOTIFICATION: "REMOVE_URL_FAIL_NOTIFICATION",
 };
 
-export const successRemoveUrlResponse = payload => ({
-    type: Types.REMOVE_URL_SUCCESS,
-    payload
+export const successRemoveUrlNotification = notification => ({
+    type: Types.REMOVE_URL_DONE_NOTIFICATION,
+    notification
 });
 
-export const errorRemoveUrlResponse = payload => ({
-    type: Types.REMOVE_URL_FAIL,
-    payload
+export const failRemoveUrlNotification = notification => ({
+    type: Types.REMOVE_URL_FAIL_NOTIFICATION,
+    notification
 });
 
 export const successGetListResponse = payload => ({
@@ -34,6 +37,14 @@ export const listLoading = () => ({
     type: Types.LOADING_LIST,
 });
 
+export const removeUrlSuccessfully = id=> ({
+    type: Types.REMOVE_URL_SUCCESS,
+    id
+});
+export const removeUrlFail = () => ({
+    type: Types.REMOVE_URL_FAIL,
+});
+
 export const getUrlList = () => async dispatch => {
     try {
         dispatch(listLoading());
@@ -48,8 +59,10 @@ export const removeUrl = id => async dispatch => {
     try {
         dispatch(listLoading());
         const { data } = await urlHelper.deleteUrlById(id);
-        dispatch(successRemoveUrlResponse(data));
+        dispatch(successRemoveUrlNotification(data)); //notification msg should be here! todo
+        dispatch(removeUrlSuccessfully(id));
     } catch (err) {
-        dispatch(errorRemoveUrlResponse(err));
+        dispatch(failRemoveUrlNotification(err)); //notification msg should be here! todo
+        dispatch(removeUrlFail());
     }
 };

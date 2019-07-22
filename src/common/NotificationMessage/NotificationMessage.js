@@ -1,13 +1,18 @@
-import React, { memo } from "react";
-import { Button, Icon } from "semantic-ui-react";
-import {ROUTES, SIZES} from "./../../constants";
+import React, { Component } from "react";
+import { Segment } from "semantic-ui-react";
+import {COLORS, SIZES} from "./../../constants";
 
-const NotificationMessage = () => {
-    return (
-        <section className="header-bar">
+class NotificationMessage extends Component {
+    render() {
+        return (
+            <section className="header-bar">
+                {
+                    <Segment color={COLORS.BLUE}></Segment>
+                }
+            </section>
+        );
+    }
 
-        </section>
-    );
 };
 
-export default memo(NotificationMessage);
+export default NotificationMessage;

@@ -2,6 +2,8 @@ import React, { memo } from "react";
 import { Table, Button, Container, Header } from "semantic-ui-react";
 
 const UrlsTable = ({ list, onRemove }) => {
+    const listUrls =  [...list.values()];
+
     return (
         <section className="table-wrapper">
             <Container>
@@ -17,7 +19,7 @@ const UrlsTable = ({ list, onRemove }) => {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {list.map( item => {
+                        {listUrls.map( item => {
                             return (
                                 <Table.Row key={item.id}>
                                     <Table.Cell>{item.id}</Table.Cell>

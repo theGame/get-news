@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getUrlList, removeUrl } from "./../../actions/urlListActions";
 import UrlsTable from "./Components/UrlsTable";
 import { HeaderBar } from "../../common";
+import { Segment, Dimmer, Loader } from "semantic-ui-react";
 
 class UrlsList extends Component {
     constructor(props) {
@@ -15,12 +16,29 @@ class UrlsList extends Component {
         this.props.getUrlList();
     }
 
+    handleRemoveUrl = id => {
+        const { list, removeUrl } = this.props;
+
+        if(list.has(id)){
+            removeUrl(id);
+        }
+    };
+
     render() {
-        const { isLoading, list, history, removeUrl } = this.props;
+        const { isLoading, list, history } = this.props;
         return (
             <section className="list-url-wrapper">
                 <HeaderBar history={history} />
-                {list && !!list.length && <UrlsTable list={list} onRemove={removeUrl}/>}
+                {list && !!list.size && (
+                    <Segment>
+                        {isLoading && (
+                            <Dimmer active inverted>
+                                <Loader inverted content="Loading" />
+                            </Dimmer>
+                        )}
+                        <UrlsTable list={list} onRemove={this.handleRemoveUrl} />
+                    </Segment>
+                )}
             </section>
         );
     }
