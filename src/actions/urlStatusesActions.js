@@ -8,7 +8,20 @@ export const Types = {
 
     TEST_URL_SUCCESS: "TEST_URL_SUCCESS",
     TEST_URL_FAIL: "TEST_URL_FAIL",
+
+    FAIL_NOTIFICATION: "FAIL_NOTIFICATION",
+    DONE_NOTIFICATION: "DONE_NOTIFICATION",
 };
+
+export const failNotification = msg => ({
+    type: Types.FAIL_NOTIFICATION,
+    msg
+});
+
+export const doneNotification = msg => ({
+    type: Types.DONE_NOTIFICATION,
+    msg
+});
 
 export const successTestResponse = payload => ({
     type: Types.TEST_URL_SUCCESS,
@@ -47,9 +60,11 @@ export const testUrl = url => async dispatch => {
 export const addUrl = url => async dispatch => {
     try {
         dispatch(urlLoading());
-        const result = await urlHelper.saveWebPage(url);
-        dispatch(successSaveResponse(result.data));
+        const { data } = await urlHelper.saveWebPage(url);
+        dispatch(successSaveResponse(data));
+        dispatch(doneNotification(`${url} successfully added!`));
     } catch (err) {
         dispatch(errorSaveResponse(err));
+        dispatch(failNotification(err.response.data.msg));
     }
 };

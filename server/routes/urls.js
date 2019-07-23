@@ -9,7 +9,7 @@ routes.post("/api/add/url", (req, res) => {
     Url.find({}, (err, urlsList) => {
         if(err) {
             res.status(404).json({
-                error: err,
+                msg: err.message,
                 code: err && err.code || "",
                 hostname: err && err.hostname || "",
             });
@@ -17,7 +17,7 @@ routes.post("/api/add/url", (req, res) => {
         }
         if(urlsList.some( item => item.url === url)) {
             res.status(404).json({
-                error: "duplicated",
+                msg: `You already has ${url} added to your url list!`,
                 code: err && err.code || "",
                 hostname: err && err.hostname || "",
             });
@@ -30,7 +30,7 @@ routes.post("/api/add/url", (req, res) => {
             //console.log(response);
             if (err) {
                 res.status(404).json({
-                    error: "Your address is not correct!",
+                    msg: "Your address is not correct!",
                     code: err.code,
                     hostname: err.hostname,
                 });
@@ -52,7 +52,7 @@ routes.post("/api/add/url", (req, res) => {
                 });
             }).catch(err => {
                 res.status(500).json({
-                    error: err.message,
+                    msg: err.message,
                 });
             });
         });
@@ -67,9 +67,7 @@ routes.post("/api/test/url", (req, res) => {
     }, function(err, response) {
         if (err) {
             res.status(404).json({
-                error: "Your address is not correct!",
-                code: err.code,
-                hostname: this.href,
+                msg: "Your address is not correct!",
             });
             return;
         }
@@ -87,9 +85,7 @@ routes.get("/api/urls", (req, res) => {
     Url.find({}, (err, urlsList) => {
         if (err) {
             res.status(404).json({
-                error: err,
-                code: err && err.code || "",
-                hostname: err && err.hostname || "",
+                msg: err.message,
             });
             return;
         }
@@ -112,9 +108,7 @@ routes.delete("/api/delete/url/:id", (req, res) => {
 
         if(err) {
             res.status(404).json({
-                error: err,
-                code: err && err.code || "",
-                hostname: err && err.hostname || "",
+                msg: err.message,
             });
             return;
         }

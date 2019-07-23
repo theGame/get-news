@@ -1,6 +1,5 @@
-import Root from './route/Root';
-import CreateUrl from './route/create/CreateUrl';
-import List from './route/list/UrlsList';
+import Root from "./route/Root";
+import { CreateUrl, UrlList } from "./route";
 import { ROUTES } from "./constants";
 
 const routes = [
@@ -15,7 +14,7 @@ const routes = [
       {
         path: ROUTES.LIST,
         exact: true,
-        component: List
+        component: UrlList
       }
     ]
   }

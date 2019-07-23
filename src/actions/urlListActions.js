@@ -13,14 +13,14 @@ export const Types = {
     REMOVE_URL_FAIL_NOTIFICATION: "REMOVE_URL_FAIL_NOTIFICATION",
 };
 
-export const successRemoveUrlNotification = notification => ({
+export const successRemoveUrlNotification = msg => ({
     type: Types.REMOVE_URL_DONE_NOTIFICATION,
-    notification
+    msg
 });
 
-export const failRemoveUrlNotification = notification => ({
+export const failRemoveUrlNotification = msg => ({
     type: Types.REMOVE_URL_FAIL_NOTIFICATION,
-    notification
+    msg
 });
 
 export const successGetListResponse = payload => ({
@@ -59,10 +59,11 @@ export const removeUrl = id => async dispatch => {
     try {
         dispatch(listLoading());
         const { data } = await urlHelper.deleteUrlById(id);
-        dispatch(successRemoveUrlNotification(data)); //notification msg should be here! todo
+        dispatch(successRemoveUrlNotification(`Url with id: ${id} successfully removed!`));
         dispatch(removeUrlSuccessfully(id));
     } catch (err) {
-        dispatch(failRemoveUrlNotification(err)); //notification msg should be here! todo
+        console.log(err);
+        dispatch(failRemoveUrlNotification(err.response.data.msg));
         dispatch(removeUrlFail());
     }
 };

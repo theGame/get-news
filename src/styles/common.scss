@@ -3,3 +3,14 @@
 .transparent{ background-color: transparent !important; };
 .float-right{ float: right; };
 .float-left{ float: left; };
+
+.notifications-wrapper{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: 60px;
+
+  .ui.segment.inverted{
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+}
